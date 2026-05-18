@@ -1,8 +1,13 @@
+<div align="center">
+
 # vue-swipe-tabs
 
-面向 H5 移动端的 Vue 3 可滑动 `TabBar` + `TabBarView` 组件。
+[![English](https://img.shields.io/badge/English-readme-lightgrey?style=for-the-badge)](./README.md)
+[![简体中文](https://img.shields.io/badge/简体中文-active-c0392b?style=for-the-badge)](./README.zh-CN.md)
 
-> English: [README.md](./README.md)
+</div>
+
+面向 H5 移动端的 Vue 3 可滑动 `TabBar` + `TabBarView` 组件。
 
 - **单屏滑动** — 跨多个 tab 点击切换时，视图**只滑一屏**就到位，而不是真的滑过中间页。
 - **实时按比例联动** — 指示器走完完整的逻辑距离；文字颜色随手势在灰 ↔ 蓝之间线性混合。

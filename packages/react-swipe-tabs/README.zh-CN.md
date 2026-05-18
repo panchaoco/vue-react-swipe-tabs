@@ -1,4 +1,10 @@
+<div align="center">
+
 # react-swipe-tabs
+
+[![简体中文](https://img.shields.io/badge/简体中文-active-c0392b?style=for-the-badge)](./README.zh-CN.md)
+
+</div>
 
 面向 H5 移动端的 React 可滑动 `TabBar` + `TabBarView` 组件。
 

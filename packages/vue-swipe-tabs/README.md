@@ -1,4 +1,11 @@
+<div align="center">
+
 # vue-swipe-tabs
+
+[![English](https://img.shields.io/badge/English-active-2c3e50?style=for-the-badge)](./README.md)
+[![简体中文](https://img.shields.io/badge/简体中文-readme-lightgrey?style=for-the-badge)](./README.zh-CN.md)
+
+</div>
 
 Mobile-friendly swipeable `TabBar` + `TabBarView` for Vue 3 (H5).
 

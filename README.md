@@ -1,53 +1,41 @@
-# vue-swipe-tabs
+<div align="center">
 
-Mobile-friendly swipeable `TabBar` + `TabBarView` for Vue 3 (H5).
+# Swipe Tabs
 
-- **Single-screen jumps** — clicking a far tab slides the view by **one screen**, no matter how many tabs are between current and target.
-- **Live, proportional UI** — the indicator slides the full logical distance; the tab text color blends gray ↔ blue in real time as you drag.
-- **Swipe gestures** with edge resistance, threshold-based commit, and snap-back.
-- **State preserved** across tab switches (all pages mounted, repositioned, not unmounted).
-- **TypeScript** declarations included.
+Mobile-friendly swipeable `TabBar` + `TabBarView` — for both **Vue 3** and **React**.
+
+[![English](https://img.shields.io/badge/English-active-2c3e50?style=for-the-badge)](./README.md)
+[![简体中文](https://img.shields.io/badge/简体中文-readme-lightgrey?style=for-the-badge)](./README.zh-CN.md)
+
+</div>
 
 ---
 
-## Install
+## What's inside
+
+A pnpm monorepo with two parallel libraries — same algorithm, same visuals, same CSS, different framework idioms.
+
+| Package | Framework | Docs |
+| --- | --- | --- |
+| [`vue-swipe-tabs`](./packages/vue-swipe-tabs/) | Vue 3 (TSX) | [README](./packages/vue-swipe-tabs/README.md) · [中文](./packages/vue-swipe-tabs/README.zh-CN.md) |
+| [`react-swipe-tabs`](./packages/react-swipe-tabs/) | React 18 / 19 (TSX) | [中文](./packages/react-swipe-tabs/README.zh-CN.md) |
+
+Both ship:
+- **Single-screen jumps** — clicking a far tab slides the view by one screen, no matter how many tabs sit between current and target.
+- **Live, proportional UI** — the indicator slides the full logical distance; the tab text color blends gray ↔ blue in real time as you drag.
+- **Swipe gestures** — edge resistance, threshold-based commit, snap-back when below threshold.
+- **State preserved** across tab switches (all pages mounted, repositioned, not unmounted).
+- **TypeScript** declarations.
+
+---
+
+## Quick start
+
+### Vue 3
 
 ```bash
-npm i vue-swipe-tabs
-# or
 pnpm add vue-swipe-tabs
-# or
-yarn add vue-swipe-tabs
 ```
-
-> Peer: `vue ^3.3`
-
-## Usage
-
-### As a plugin
-
-```ts
-// main.ts
-import { createApp } from 'vue'
-import SwipeTabsPlugin from 'vue-swipe-tabs'
-import App from './App.vue'
-
-createApp(App).use(SwipeTabsPlugin).mount('#app')
-```
-
-```vue
-<template>
-  <SwipeTabs v-model="active" :tabs="['推荐', '热门', '直播', '关注', '附近']">
-    <template #page-0>...</template>
-    <template #page-1>...</template>
-    <template #page-2>...</template>
-    <template #page-3>...</template>
-    <template #page-4>...</template>
-  </SwipeTabs>
-</template>
-```
-
-### Or import the component directly
 
 ```vue
 <script setup lang="ts">
@@ -67,45 +55,37 @@ const active = ref(0)
 </template>
 ```
 
-### Dynamic slot pattern (recommended for many tabs)
+Full API: [packages/vue-swipe-tabs/README.md](./packages/vue-swipe-tabs/README.md)
 
-```vue
-<SwipeTabs v-model="active" :tabs="tabs">
-  <template
-    v-for="(t, i) in tabs"
-    :key="i"
-    #[`page-${i}`]="{ index, active }"
-  >
-    <YourPage :name="t" :index="index" :active="active" />
-  </template>
-</SwipeTabs>
+### React
+
+```bash
+pnpm add react-swipe-tabs
 ```
 
----
+```tsx
+import { useState } from 'react'
+import { SwipeTabs } from 'react-swipe-tabs'
+import 'react-swipe-tabs/style.css'
 
-## Props
+const tabs = ['推荐', '热门', '直播', '关注', '附近']
 
-| Prop          | Type       | Default | Description                                              |
-| ------------- | ---------- | ------- | -------------------------------------------------------- |
-| `tabs`        | `string[]` | —       | Tab labels (required)                                    |
-| `modelValue`  | `number`   | `0`     | Active tab index (`v-model`)                             |
-| `duration`    | `number`   | `280`   | Animation duration in ms                                 |
-| `threshold`   | `number`   | `0.25`  | Swipe distance ratio (0–1) needed to commit a page change |
+export default function App() {
+  const [active, setActive] = useState(0)
+  return (
+    <SwipeTabs
+      tabs={tabs}
+      value={active}
+      onChange={setActive}
+      renderPage={({ index, active }) => (
+        <div className="page">{tabs[index]} — active: {String(active)}</div>
+      )}
+    />
+  )
+}
+```
 
-## Events
-
-| Event                | Payload  | Description                              |
-| -------------------- | -------- | ---------------------------------------- |
-| `update:modelValue`  | `number` | Fires when the active tab changes        |
-| `change`             | `number` | Same as above                            |
-
-## Slots
-
-| Slot          | Scope                                | Description                  |
-| ------------- | ------------------------------------ | ---------------------------- |
-| `page-${i}`   | `{ index: number; active: boolean }` | Content of the *i*-th page   |
-
-The `active` slot prop flips **the moment** navigation starts (click) or crosses the halfway point (drag) — not when the animation ends — so you can lazy-load or trigger entry animations promptly.
+Full API: [packages/react-swipe-tabs/README.zh-CN.md](./packages/react-swipe-tabs/README.zh-CN.md)
 
 ---
 
@@ -113,36 +93,46 @@ The `active` slot prop flips **the moment** navigation starts (click) or crosses
 
 Two ideas drive the implementation:
 
-1. **Phantom slot**: pages are absolutely positioned at `left: i*100%`. On a non-adjacent jump, the target page's `left` is *temporarily* set to "current ± 1", the track slides one screen, then both the `currentIndex` and the page's `left` reset to their natural values in a single paint cycle. Result: a one-screen slide regardless of distance, zero visual jump on settle.
-2. **Decoupled state**: separate refs drive (a) the logical resting position, (b) the visual track translation, (c) the indicator's fractional position, and (d) the "intent" index used for tab focus. This lets click navigation, drag tracking, and CSS transitions all run on the right clock without fighting each other.
+1. **Phantom slot.** Pages are absolutely positioned at `left: i*100%`. On a non-adjacent jump, the target page's `left` is *temporarily* set to "current ± 1", the track slides one screen, then both the `currentIndex` and the page's `left` reset to their natural values in a single paint cycle. Result: a one-screen slide regardless of distance, zero visual jump on settle.
+2. **Decoupled state.** Separate fields drive (a) the logical resting position, (b) the visual track translation, (c) the indicator's fractional position, and (d) the "intent" index used for tab focus. This lets click navigation, drag tracking, and CSS transitions all run on the right clock without fighting each other.
 
-See [`docs/implementation.md`](./docs/implementation.md) for the full write-up (Chinese).
-
----
-
-## Styling
-
-The component ships scoped styles by default — no extra CSS import needed when using `<SwipeTabs />`.
-
-If you want to override colors, target the BEM-ish class names:
-
-```css
-.swipe-tabs__bar { background: #fafafa; }
-.swipe-tabs__indicator { background: #ff5500; }
-```
-
-The active text color is set inline so it can blend during drag. To customize it, fork the component or override with `!important` on a CSS rule. A future version may expose CSS custom properties for these.
+Full write-up (Chinese, with diagrams): [docs/implementation.md](./docs/implementation.md)
 
 ---
 
 ## Development
 
+Requires Node `^20.19 || >=22.12` and pnpm.
+
 ```bash
-npm install
-npm run dev         # demo app at http://localhost:5173
-npm run build       # builds the library to dist/
-npm run build:demo  # builds the demo app
+pnpm install                    # install all workspace deps
+
+pnpm dev                        # run the Vue playground (vite dev)
+pnpm dev:react                  # run the React playground
+
+pnpm build                      # build both libraries
+pnpm build:vue                  # build only vue-swipe-tabs
+pnpm build:react                # build only react-swipe-tabs
+
+pnpm build:playground           # build the Vue playground (consumes built lib)
+pnpm build:playground:react     # build the React playground
+pnpm preview                    # preview the Vue playground build
+pnpm preview:react              # preview the React playground build
 ```
+
+Workspace layout:
+
+```
+packages/
+├── vue-swipe-tabs/      # Vue 3 library
+├── react-swipe-tabs/    # React library
+├── playground/          # Vue demo / smoke test
+└── react-playground/    # React demo / smoke test
+```
+
+The playgrounds depend on the library packages via `workspace:*`, so they always exercise the actually-built `dist/` — not the source. Run `pnpm build:<framework>` after editing a library before testing in its playground.
+
+---
 
 ## License
 
