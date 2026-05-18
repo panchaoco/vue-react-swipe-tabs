@@ -5,7 +5,9 @@
 - 跨多个 tab 点击切换时，TabBarView **只滑一屏**就到位，而不是真的滑过中间页
 - TabBar 上的指示器、文字颜色、激活态对**点击/手势全程**实时同步、且**按滑动比例**线性变化
 
-源文件：[src/components/SwipeTabs.vue](../src/components/SwipeTabs.vue)
+源文件：
+- Vue 版：[packages/vue-swipe-tabs/src/components/SwipeTabs.tsx](../packages/vue-swipe-tabs/src/components/SwipeTabs.tsx)
+- React 版：[packages/react-swipe-tabs/src/SwipeTabs.tsx](../packages/react-swipe-tabs/src/SwipeTabs.tsx)
 
 ---
 
