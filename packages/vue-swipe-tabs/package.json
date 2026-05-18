@@ -1,0 +1,64 @@
+{
+  "name": "vue-swipe-tabs",
+  "version": "0.1.0",
+  "description": "Mobile-friendly swipeable TabBar + TabBarView for Vue 3 (H5). Non-adjacent tabs slide in a single screen, with live proportional indicator and color blending.",
+  "keywords": [
+    "vue",
+    "vue3",
+    "tabs",
+    "tabbar",
+    "h5",
+    "mobile",
+    "swipe",
+    "component"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./style.css": "./dist/vue-swipe-tabs.css",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "*.css",
+    "*.vue"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite build -c vite.config.ts --watch",
+    "build": "npm-run-all build:js build:types",
+    "build:js": "vite build -c vite.config.ts",
+    "build:types": "vue-tsc -p tsconfig.lib.json --emitDeclarationOnly",
+    "type-check": "vue-tsc --build",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node24": "^24.0.4",
+    "@types/node": "^24.12.2",
+    "@vitejs/plugin-vue-jsx": "^5.1.5",
+    "@vue/tsconfig": "^0.9.1",
+    "npm-run-all2": "^8.0.4",
+    "typescript": "~6.0.0",
+    "vite": "^8.0.8",
+    "vue": "^3.5.32",
+    "vue-tsc": "^3.2.6"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
+}

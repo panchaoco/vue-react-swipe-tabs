@@ -1,0 +1,40 @@
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+}
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.page h2 {
+  margin: 0 0 12px;
+}
+.page .cnt {
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: #1989fa;
+  color: #fff;
+  border: 0;
+  font-size: 14px;
+}
+.page .hint {
+  color: #555;
+  margin: 16px 0;
+  font-size: 13px;
+}
+.page .filler {
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+}

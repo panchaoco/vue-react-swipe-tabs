@@ -1,0 +1,64 @@
+{
+  "name": "react-swipe-tabs",
+  "version": "0.1.0",
+  "description": "Mobile-friendly swipeable TabBar + TabBarView for React (H5). Non-adjacent tabs slide in a single screen, with live proportional indicator and color blending.",
+  "keywords": [
+    "react",
+    "tabs",
+    "tabbar",
+    "h5",
+    "mobile",
+    "swipe",
+    "component"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./style.css": "./dist/react-swipe-tabs.css",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite build -c vite.config.ts --watch",
+    "build": "npm-run-all build:js build:types",
+    "build:js": "vite build -c vite.config.ts",
+    "build:types": "tsc -p tsconfig.lib.json --emitDeclarationOnly",
+    "type-check": "tsc --build",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node24": "^24.0.4",
+    "@types/node": "^24.12.2",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^5.0.4",
+    "npm-run-all2": "^8.0.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "~6.0.0",
+    "vite": "^8.0.8"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
+}

@@ -1,0 +1,78 @@
+.swipe-tabs {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.swipe-tabs__bar {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.swipe-tabs__tab {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 14px 8px;
+  background: transparent;
+  border: 0;
+  font-size: 15px;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--swipe-tabs-duration, 280ms) ease-out;
+  cursor: pointer;
+}
+
+/* While the user is dragging, color is driven by the inline blend each frame —
+   any CSS transition would lag behind the finger. */
+.swipe-tabs__bar--dragging .swipe-tabs__tab {
+  transition: none;
+}
+
+.swipe-tabs__tab--active {
+  font-weight: 600;
+}
+
+.swipe-tabs__indicator-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  pointer-events: none;
+}
+
+.swipe-tabs__indicator {
+  height: 100%;
+  background: #1989fa;
+  border-radius: 2px;
+  will-change: transform;
+}
+
+.swipe-tabs__viewport {
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.swipe-tabs__track {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.swipe-tabs__page {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}

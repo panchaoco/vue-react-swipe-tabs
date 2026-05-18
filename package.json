@@ -1,0 +1,26 @@
+{
+  "name": "vue-swipe-tabs-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -F vue-swipe-tabs build && pnpm -F react-swipe-tabs build",
+    "build:vue": "pnpm -F vue-swipe-tabs build",
+    "build:react": "pnpm -F react-swipe-tabs build",
+    "dev": "pnpm -F playground dev",
+    "dev:react": "pnpm -F react-playground dev",
+    "dev:lib": "pnpm -F vue-swipe-tabs dev",
+    "dev:lib:react": "pnpm -F react-swipe-tabs dev",
+    "build:playground": "pnpm -F playground build",
+    "build:playground:react": "pnpm -F react-playground build",
+    "preview": "pnpm -F playground preview",
+    "preview:react": "pnpm -F react-playground preview",
+    "format": "prettier --write --experimental-cli packages/*/src/"
+  },
+  "devDependencies": {
+    "prettier": "3.8.3"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
+}
